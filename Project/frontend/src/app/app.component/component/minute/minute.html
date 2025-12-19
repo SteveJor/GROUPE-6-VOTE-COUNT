@@ -1,0 +1,42 @@
+<div class="flex-row main justify-content-evenly">
+  <div class="countdown-container" *ngIf="isElectionLive; else finished">
+    <div class="timer-group">
+      <span class="timer-value">{{ formatNumber(days) }}</span>
+      <span class="timer-label">JOURS</span>
+    </div>
+
+    <span class="separator">:</span>
+
+    <div class="timer-group">
+      <span class="timer-value">{{ formatNumber(hours) }}</span>
+      <span class="timer-label">HEURES</span>
+    </div>
+
+    <span class="separator">:</span>
+
+    <div class="timer-group">
+      <span class="timer-value">{{ formatNumber(minutes) }}</span>
+      <span class="timer-label">MINUTES</span>
+    </div>
+
+    <span class="separator">:</span>
+
+    <div class="timer-group">
+      <span class="timer-value">{{ formatNumber(seconds) }}</span>
+      <span class="timer-label">SECONDES</span>
+    </div>
+  </div>
+
+  <img
+    src="assets/images/vote_image.png"
+    alt="Boîte de vote"
+    class="img-fluid vote-image rounded-3"
+  />
+</div>
+
+<ng-template #finished>
+  <div class="election-finished">
+    <i class="fas fa-check-circle"></i>
+    Le scrutin est terminé.
+  </div>
+</ng-template>

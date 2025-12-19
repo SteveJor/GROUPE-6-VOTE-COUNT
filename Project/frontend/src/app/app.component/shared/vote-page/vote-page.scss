@@ -1,0 +1,407 @@
+/* vote-page.scss */
+// Définitions des couleurs
+$primary-dark: #27348b;
+$main: #0c102d;
+$accent-blue: #3f3d99;
+$background-color: #f8f9fa;
+$error-red: #d32f2f;
+
+// Palette de couleurs pour les cartes (identique à candidate.scss)
+$card-colors: (
+  'red': rgba(158, 27, 47, 0.86),
+  'green': rgba(47, 140, 68, 0.89),
+  'olive': rgba(138, 136, 29, 0.89),
+  'blue': rgba(12, 16, 45, 0.93),
+  'black': rgba(54, 54, 54, 0.91),
+  'brown': rgba(158, 93, 44, 0.9),
+  'purple': rgba(106, 26, 124, 0.87)
+);
+
+// ----------------------------------------------------
+// LOADER
+// ----------------------------------------------------
+.spinner-border.text-primary {
+  border-color: $primary-dark;
+  border-right-color: transparent;
+  width: 3rem;
+  height: 3rem;
+}
+
+.visually-hidden.text-dark {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// ----------------------------------------------------
+// STRUCTURE ET FOND
+// ----------------------------------------------------
+.vote-wrapper {
+  min-height: 100vh;
+  background-color: $background-color;
+  padding: 0;
+}
+
+.regional-title {
+  color: $primary-dark;
+  font-weight: 800;
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+}
+
+.underline {
+  background-color: #27348b;
+  width: 15rem;
+  height: 4px;
+  margin: 0.5rem auto;
+}
+
+// ----------------------------------------------------
+// CONTENU PRINCIPAL
+// ----------------------------------------------------
+.vote-container {
+  display: flex;
+  gap: 2.2rem;
+  padding: 2.2rem;
+  margin: 10px auto;
+  margin-top: 10%;
+
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.75rem;
+  }
+}
+
+.vote-image {
+  margin: 10px auto;
+  display: block;
+  width: 300px;
+  height: auto;
+}.vote-image1 {
+  margin: 10px auto;
+  display: block;
+  width: 150px;
+  height: auto;
+}
+
+.main-content {
+  flex: 1;
+  padding: 2.2rem;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 1rem;
+  }
+}
+
+.voted-message {
+  color: #a7f3d0;
+  padding: 1.5rem;
+  background-color: rgba(#a7f3d0, 0.1);
+  border: 2px solid #a7f3d0;
+  border-radius: 8px;
+  font-size: 1.2rem;
+}
+
+// ----------------------------------------------------
+// CARTES CANDIDATS AVEC COULEURS
+// ----------------------------------------------------
+.candidates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(285px, 1fr));
+  gap: 1.6rem;
+  margin-bottom: 2.2rem;
+  margin-top: 2.2rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+}
+
+.candidate-card {
+  background-color: #ffffff;
+  border: 3px solid #d3d0d0;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.candidate-card:hover {
+  border-color: $main;
+  box-shadow: 0 8px 24px rgba($primary-dark, 0.3);
+  transform: translateY(-5px);
+}
+
+.candidate-card.selected {
+  border-color: $primary-dark;
+  box-shadow: 0 0 0 4px rgba($primary-dark, 0.2);
+}
+
+.card-image {
+  width: 100%;
+  height: 225px;
+  overflow: hidden;
+  background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="%23ddd" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.89 6-3.89s5.97 1.9 6 3.89c-1.29 1.94-3.5 3.22-6 3.22z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: center 30%;
+  background-size: 50%;
+}
+
+// Système de couleurs pour les cartes
+@each $color, $value in $card-colors {
+  .card-#{$color} {
+    .card-content {
+      background-color: $value;
+    }
+
+    .card-actions {
+      background-color: $value;
+    }
+
+    // Effet hover spécifique à chaque couleur
+    &:hover {
+      border-color: darken($value, 15%);
+    }
+
+    &.selected {
+      border-color: darken($value, 15%);
+      .card-content {
+        background-color: darken($value, 10%);
+      }
+      .card-actions {
+        background-color: darken($value, 10%);
+      }
+    }
+  }
+}
+
+.card-content {
+  padding: 1.1rem;
+  text-align: center;
+  transition: background-color 0.3s ease;
+
+  h3 {
+    color: #fff;
+    margin: 0.6rem 0;
+    font-size: 1.14rem;
+    font-weight: 700;
+  }
+}
+
+.party {
+  color: #e0e0e0;
+  font-weight: 700;
+  font-size: 0.87rem;
+  margin: 0.4rem 0;
+  letter-spacing: 0.3px;
+}
+
+.description {
+  color: #f0f0f0;
+  font-size: 0.83rem;
+  margin: 0.6rem 0;
+  line-height: 1.4;
+}
+
+.card-actions {
+  display: flex;
+  gap: 0.6rem;
+  padding: 0 1.1rem 1.1rem;
+  transition: background-color 0.3s ease;
+
+  @media (max-width: 480px) {
+    padding: 0 0.9rem 0.9rem;
+  }
+}
+
+.btn-voter,
+.btn-plus {
+  flex: 1;
+  padding: 0.62rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.82rem;
+  transition: all 0.3s ease;
+
+  @media (max-width: 480px) {
+    font-size: 0.7rem;
+    padding: 0.5rem;
+  }
+}
+
+.btn-voter {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #333;
+
+  &:hover {
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.btn-plus {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+}
+
+// ----------------------------------------------------
+// MODALE DE CONFIRMATION (inchangé)
+// ----------------------------------------------------
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-confirm {
+  background: $background-color;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  max-width: 500px;
+  box-shadow: 0 12px 40px rgba(#ffffff, 0.4);
+
+  @media (max-width: 480px) {
+    max-width: 95%;
+    padding: 1.2rem;
+  }
+}
+
+.modal-confirm h3 {
+  color: $primary-dark;
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.alert-error {
+  color: $error-red;
+  background-color: lighten($error-red, 40%);
+  border: 1px solid $error-red;
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin-top: 1rem;
+}
+
+.vote-password-box {
+  text-align: left;
+  margin: 1.5rem 0;
+
+  label {
+    display: block;
+    color: $main;
+    font-weight: 600;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid lighten($main, 40%);
+    border-radius: 6px;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+
+    &:focus {
+      outline: none;
+      border-color: $main;
+    }
+
+    &:disabled {
+      background-color: #e5e5e5;
+      color: #424242;
+    }
+  }
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn-cancel,
+.btn-confirm {
+  flex: 1;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-cancel {
+  background: #e5e5e5;
+  color: #424242;
+
+  &:hover {
+    background: #cfd8dc;
+  }
+}
+
+.btn-confirm {
+  background-color: $main;
+  color: #ffffff;
+
+  &:hover {
+    background-color: darken($primary-dark, 8%);
+    box-shadow: 0 4px 12px rgba($primary-dark, 0.3);
+  }
+}
+
+// 🎨 Animations fluides pour les cartes
+.candidates-grid {
+  position: relative;
+}
+
+.candidate-card {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
+}
+
+// Animation supplémentaire pour les changements de couleur
+.card-content,
+.card-actions {
+  transition: background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// Amélioration de l'effet hover
+.candidate-card {
+  &:hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}

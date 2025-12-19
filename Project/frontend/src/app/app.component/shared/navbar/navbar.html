@@ -1,0 +1,99 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+  <div class="container-fluid px-5">
+
+    <a class="navbar-brand" routerLink="/">
+      <img src="assets/images/logo2.png" alt="VoteCount" height="50" class="d-inline-block align-text-top">
+    </a>
+
+    <button class="navbar-toggler" type="button" (click)="toggleMenu()"
+            [attr.aria-expanded]="!isMenuCollapsed" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" [class.show]="!isMenuCollapsed" id="navbarNav">
+      <ul class="navbar-nav ms-auto align-items-center">
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}" (click)="closeMenu()">
+            Accueil
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/about" routerLinkActive="active-link" (click)="closeMenu()">
+            A propos
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/contact" routerLinkActive="active-link" (click)="closeMenu()">
+            Contactez
+          </a>
+        </li>
+
+        <li class="nav-item ms-lg-4" *ngIf="!(authService.isLoggedIn$ | async)">
+          <a class="btn btn-dark" style="background: #0c102d" routerLink="/login" (click)="closeMenu()">
+            Connexion
+          </a>
+        </li>
+
+        <li class="nav-item dropdown ms-lg-4" *ngIf="authService.isLoggedIn$ | async">
+          <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button"
+             data-bs-toggle="dropdown" aria-expanded="false">
+            <img ngSrc="assets/images/PAUL.png"
+                 class="rounded-circle me-2" height="35" width="35" alt="Profile" />
+            <span>{{ (authService.currentUser$ | async)?.nom }}</span>
+          </a>
+
+          <ul class="dropdown-menu dropdown-menu-end p-3" aria-labelledby="navbarDropdown" style="min-width: 350px;">
+
+            <!-- Header avec photo et nom/prénom -->
+            <li class="d-flex align-items-center mb-3">
+              <img ngSrc="assets/images/PAUL.png"
+                   class="rounded-circle me-2" height="50" width="50" alt="Profile" />
+              <div>
+                <strong>{{ (authService.currentUser$ | async)?.nom }} {{ (authService.currentUser$ | async)?.prenom }}</strong>
+                <div class="text-muted" style="font-size: 0.85rem;">
+                  {{ (authService.currentUser$ | async)?.region }}
+                </div>
+              </div>
+            </li>
+
+            <li><hr class="dropdown-divider"></li>
+
+            <!-- Infos utilisateur -->
+            <li class="mb-2">
+              <small class="text-muted">Email</small>
+              <div>{{ (authService.currentUser$ | async)?.email }}</div>
+            </li>
+            <li class="mb-2">
+              <small class="text-muted">Numéro CNI</small>
+              <div>{{ (authService.currentUser$ | async)?.numeroCNI }}</div>
+            </li>
+            <li class="mb-2">
+              <small class="text-muted">Date inscription</small>
+              <div>{{ (authService.currentUser$ | async)?.dateInscription | date:'shortDate' }}</div>
+            </li>
+            <li class="mb-2">
+              <small class="text-muted">A voté</small>
+              <div>{{ (authService.currentUser$ | async)?.avote ? 'Oui' : 'Non' }}</div>
+            </li>
+
+            <li><hr class="dropdown-divider"></li>
+
+            <!-- Déconnexion en bas -->
+            <li>
+              <button class="btn btn-outline-danger w-100" (click)="authService.logout(); closeMenu()">
+                Déconnexion
+              </button>
+            </li>
+
+          </ul>
+        </li>
+
+
+
+      </ul>
+    </div>
+  </div>
+</nav>

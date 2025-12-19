@@ -1,0 +1,89 @@
+
+$timer-color: #ffffff;
+$label-color: #9da6bb;
+$main-color: #0c102d;
+
+//.countdown-container {
+//  display: flex;
+//  align-items: flex-end;
+//  justify-content: center;
+//  margin: 30px 0;
+//  margin-top: 10%;
+//  margin-bottom: 5%;
+//  font-family: 'Montserrat', sans-serif;
+//}
+.timer-value {
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.flex-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 2rem;
+  flex-wrap: nowrap;
+}
+
+.countdown-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: nowrap;
+}
+.main{
+  background: $main-color;
+
+}
+
+.timer-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.timer-value {
+  font-size: 5.6rem;   // ↓ taille réduite
+  font-weight: 700;
+  color: $timer-color;
+}
+
+.timer-label {
+  font-size: 1rem;
+  letter-spacing: 1px;
+  color: #6c757d;
+}
+
+
+.vote-image {
+margin-top: 150px;
+margin-bottom: 100px;
+  max-width: 500px;
+  height: auto;
+}
+
+.separator {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 0 0.2rem;
+  color: $timer-color;
+}
+
+
+.election-finished {
+  color: #c0392b;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 20px 0;
+}
+
+@media (max-width: 768px) {
+  .flex-row {
+    flex-direction: column;
+  }
+
+  .countdown-container {
+    margin-bottom: 1rem;
+  }
+}

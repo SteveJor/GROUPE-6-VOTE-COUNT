@@ -1,0 +1,6 @@
+<button class="btn btn-vote-floating shadow-lg"
+        *ngIf="(authService.isLoggedIn$ | async) && ((authService.currentUser$ | async)?.avote === false)"
+        (click)="startVote()">
+  <i class="fas fa-vote-yea me-2"></i> Voter
+</button>
+

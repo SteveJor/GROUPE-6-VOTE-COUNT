@@ -1,0 +1,40 @@
+$primary-vote-color: #0b0f2c; // Couleur jaune/orange pour attirer l'attention
+$hover-color: #d97706;
+
+.btn-vote-floating {
+  // Positionnement fixe en bas à droite
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  z-index: 1050; // Au-dessus de la plupart des éléments
+
+  // Style du bouton
+  background-color: $primary-vote-color;
+  color: white;
+  border: none;
+  border-radius: 50px; // Forme de pilule
+  padding: 15px 25px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  cursor: pointer;
+
+  // Animation
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: $hover-color;
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  }
+}
+
+// Adaptation pour les petits écrans (mobile)
+@media (max-width: 768px) {
+  .btn-vote-floating {
+    bottom: 15px;
+    right: 15px;
+    padding: 12px 20px;
+    font-size: 1rem;
+  }
+}

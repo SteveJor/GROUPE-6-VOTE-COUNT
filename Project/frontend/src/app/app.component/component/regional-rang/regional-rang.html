@@ -1,0 +1,85 @@
+<div class="container-fluid px-5 py-5">
+  <div class="row flex-row justify-content-evenly align-content-center">
+    <div class="col-3">
+      <img src="assets/images/vote.png"
+           alt="Boîte de vote avec un bulletin validé"
+           class="img-fluid vote-image rounded-3" >
+    </div>
+    <div class="col-9 flex-column align-content-center">
+      <h2 class="text-center regional-title">AFFICHAGE DES VOTES PAR RÉGION (TEMPS RÉEL)</h2>
+      <div class="underline"></div>
+      <p class="text-center text-muted mt-3">
+        Simulation dynamique des votes par région - Mise à jour toutes les 3-6 secondes
+      </p>
+    </div>
+  </div>
+
+  <div class="row g-4 justify-content-center mt-4" [@listAnimation]="displayedRegions.length">
+    <div class="col-12 col-md-6 col-lg-4"
+         *ngFor="let region of displayedRegions; trackBy: trackByRegionId">
+
+      <div class="region-card shadow-sm">
+
+        <div class="region-header">
+          <span class="region-name">{{ region.name }}</span>
+          <span class="voter-count">
+            {{ region.totalVotes | number:'1.0-0' }} / {{ region.totalVoters | number:'1.0-0' }} VOTANTS
+          </span>
+        </div>
+
+        <div class="region-stats mb-3 px-3 pt-2">
+          <div class="d-flex justify-content-between small">
+            <span>Taux de participation:</span>
+            <span class="fw-bold">
+              {{ (region.totalVotes / region.totalVoters * 100) | number:'1.1-1' }}%
+            </span>
+          </div>
+        </div>
+
+        <div class="candidate-list">
+          <div class="candidate-row header-row">
+            <span class="candidate-rank-text">Rang</span>
+            <span class="candidate-party">Parti</span>
+            <span class="candidate-percent">Votes %</span>
+          </div>
+
+          <div class="candidate-row"
+               *ngFor="let candidate of getCandidatesToShow(region); trackBy: trackByCandidateId"
+               [style.border-left]="'4px solid ' ">
+            <span class="candidate-rank-text">
+              <span class="badge" [ngClass]="'bg-' + candidate.color">
+                {{ candidate.rank }}
+              </span>
+            </span>
+            <span class="candidate-party">
+              <strong>{{ candidate.party }}</strong><br>
+              <small class="text-muted">{{ candidate.name }}</small>
+            </span>
+            <span class="candidate-percent">
+              <div class="d-flex flex-column align-items-end">
+                <span class="fw-bold">{{ candidate.votesPercent }}%</span>
+                <small class="text-muted">
+                  {{ candidate.actualVotes | number:'1.0-0' }} votes
+                </small>
+              </div>
+            </span>
+          </div>
+
+          <div class="text-center pt-3" *ngIf="hasMoreCandidates(region)">
+            <button class="btn btn-sm btn-link" (click)="showMoreCandidates(region.id)">
+              <i class="fas fa-chevron-down me-1"></i>
+              Voir {{ region.candidates.length - getCandidatesToShow(region).length }} candidats supplémentaires
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center mt-5" *ngIf="hasMoreRegions">
+    <button class="btn btn-primary btn-lg" (click)="showMoreRegions()">
+      Voir Toutes les Régions <i class="fas fa-map-marked-alt ms-2"></i>
+    </button>
+  </div>
+
+</div>

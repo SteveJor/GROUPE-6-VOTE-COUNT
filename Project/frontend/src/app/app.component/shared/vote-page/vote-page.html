@@ -1,0 +1,83 @@
+<!-- vote-page.html -->
+<div class="vote-wrapper">
+  <div class="vote-container mt-5">
+    <div class="main-content">
+      <div class="flex flex-row container-fluid mx-4 justify-content-center align-content-center">
+        <img src="assets/images/vote_page.png"
+             alt="Boîte de vote avec un bulletin validé"
+             class="img-fluid vote-image rounded-3">
+        <div class="flex-column align-content-center">
+          <h2 class="text-center regional-title">Veuillez choisir un candidat pour voter</h2>
+          <div class="underline"></div>
+        </div>
+      </div>
+
+      <!-- Spinner de chargement -->
+      <div class="text-center my-5" *ngIf="isLoading">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden text-dark">Chargement des candidats...</span>
+        </div>
+      </div>
+
+      <div *ngIf="!isLoading">
+        <div *ngIf="(hasVoted$ | async); else candidateSelection">
+          <h2 class="voted-message">✅ Votre vote a été enregistré avec succès. Merci pour votre participation !</h2>
+        </div>
+
+        <ng-template #candidateSelection>
+          <!-- ⭐ Ajout de l'animation et du trackBy -->
+          <div class="candidates-grid"
+               [@gridAnimation]="allCandidates.length">
+            <div *ngFor="let candidate of allCandidates; trackBy: trackByPartiId"
+                 class="candidate-card"
+                 [ngClass]="'card-' + candidate.color"
+                 [class.selected]="selectedId === candidate.id"
+                 (click)="selectCandidate(candidate)">
+
+              <div class="card-image">
+                <!-- Image placeholder -->
+              </div>
+
+              <div class="card-content">
+                <h3>{{ candidate.president }}</h3>
+                <p class="party">{{ candidate.nomParti }}</p>
+                <p class="description">{{ candidate.slogan }}</p>
+              </div>
+
+              <div class="card-actions">
+                <button class="btn-voter" (click)="confirm(candidate, $event)">VOTER</button>
+                <button class="btn-plus" (click)="showMore(candidate, $event)">VOIR PLUS</button>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de confirmation -->
+  <div *ngIf="showConfirm" class="modal-overlay" (click)="cancelVote()">
+    <div class="modal-confirm" (click)="$event.stopPropagation()">
+      <img src="assets/images/vote.png"
+           alt="Boîte de vote avec un bulletin validé"
+           class="img-fluid vote-image1 rounded-3">
+      <h3>Confirmez votre vote</h3>
+      <p>Vous êtes sur le point de voter pour <strong>{{ selectedCandidate?.president }} - {{ selectedCandidate?.nomParti }}</strong>. Cette action est irréversible.</p>
+
+      <div *ngIf="errorMessage" class="alert-error">{{ errorMessage }}</div>
+
+      <div class="vote-password-box">
+        <label>CANDIDAT CHOISI</label>
+        <input [ngModel]="candidateToVote" disabled />
+
+        <label>ENTREZ VOTRE MOT DE PASSE (Vérification 2FA)</label>
+        <input [(ngModel)]="votePassword" type="password" placeholder="Mot de passe confidentiel" />
+      </div>
+
+      <div class="modal-buttons">
+        <button class="btn-cancel" (click)="cancelVote()">ANNULER</button>
+        <button class="btn-confirm" (click)="finalizeVote()">CONFIRMER ET VOTER</button>
+      </div>
+    </div>
+  </div>
+</div>

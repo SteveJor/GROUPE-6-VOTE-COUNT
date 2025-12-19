@@ -1,0 +1,216 @@
+$primary-dark: #0c102d;
+$accent-blue: #3f3d99;
+$border-color: #e0e0e0;
+$active-border: $accent-blue;
+$font-stack: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+// Couleurs pour les partis
+$party-colors: (
+  'red': #e74c3c,
+  'green': #2ecc71,
+  'blue': #3498db,
+  'yellow': #f1c40f,
+  'orange': #e67e22,
+  'purple': #9b59b6,
+  'teal': #1abc9c,
+  'olive': #808000,
+  'black': #2c3e50,
+  'brown': #795548
+);
+
+.regional-title {
+  color: $primary-dark;
+  font-weight: 800;
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+  font-family: $font-stack;
+}
+
+.underline{
+  background-color: #27348b;
+  width: 15rem;
+  height: 4px;
+  margin: 0.5rem auto;
+}
+
+.vote-image {
+  max-width: 400px;
+  height: auto;
+  margin-bottom: 50px;
+}
+
+.region-card {
+  background-color: #fff;
+  border-radius: 12px;
+  border: 2px solid $border-color;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  height: 100%;
+  min-height: 450px;
+
+  &:hover {
+    border-color: $active-border;
+    box-shadow: 0 8px 25px rgba($active-border, 0.15);
+    transform: translateY(-5px);
+  }
+}
+
+.region-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: linear-gradient(135deg, $primary-dark 0%, darken($primary-dark, 5%) 100%);
+  color: #ffffff;
+  border-bottom: 2px solid $accent-blue;
+}
+
+.region-name {
+  font-weight: 700;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.voter-count {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(0, 0, 0, 0.2);
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.region-stats {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid $border-color;
+  padding: 10px 15px;
+}
+
+.candidate-list {
+  padding: 0;
+}
+
+.header-row {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: $primary-dark;
+  border-bottom: 2px solid $border-color;
+  padding: 12px 15px;
+}
+
+.candidate-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 15px;
+  border-bottom: 1px solid rgba($border-color, 0.5);
+  font-size: 0.95rem;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #f8f9fa;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.candidate-rank-text {
+  flex: 0 0 20%;
+
+  .badge {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+}
+
+.candidate-party {
+  flex-grow: 1;
+  font-weight: 500;
+  color: $primary-dark;
+  padding-left: 15px;
+  line-height: 1.4;
+}
+
+.candidate-percent {
+  flex: 0 0 25%;
+  font-weight: 700;
+  text-align: right;
+  line-height: 1.4;
+}
+
+// Classes pour les couleurs des partis
+@each $color, $value in $party-colors {
+  .bg-#{$color} {
+    background-color: $value !important;
+    color: white;
+  }
+
+  .text-#{$color} {
+    color: $value !important;
+  }
+
+  .border-#{$color} {
+    border-color: $value !important;
+  }
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, $primary-dark 0%, $accent-blue 100%);
+  border: none;
+  font-weight: 600;
+  padding: 12px 35px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba($primary-dark, 0.3);
+  }
+}
+
+.btn-link {
+  color: $accent-blue;
+  font-size: 0.9rem;
+  text-decoration: none;
+  font-weight: 500;
+
+  &:hover {
+    text-decoration: underline;
+    color: darken($accent-blue, 10%);
+  }
+}
+
+// Animation pour les mises à jour
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+
+.updating {
+  animation: pulse 1s ease-in-out;
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .region-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .candidate-row {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .candidate-party, .candidate-percent {
+    flex: 1 1 100%;
+    padding-left: 0;
+    text-align: left;
+  }
+}

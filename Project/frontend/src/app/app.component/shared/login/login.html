@@ -1,0 +1,154 @@
+<div class="login-page-wrapper container-fluid">
+  <div class="row h-100">
+
+    <!-- Panel gauche avec image -->
+    <div class="image-panel col-lg-6 d-none d-lg-flex flex-column justify-content-center align-items-center p-5">
+      <img src="assets/images/vote.png" alt="Urne de vote" class="img-fluid vote-image mb-4" />
+      <h1 class="display-5 text-dark fw-bold">Votre voix compte.</h1>
+      <p class="lead text-dark-50">Authentifiez-vous pour participer aux élections en toute sécurité.</p>
+    </div>
+
+    <!-- Panel droite avec formulaire -->
+    <div class="form-panel col-lg-6 d-flex flex-column justify-content-center align-items-center py-5 px-3">
+      <div class="login-card p-4 p-md-5 w-100">
+
+        <img src="assets/images/logo2.png" alt="Logo" class="logo-form mb-4" />
+        <h2 class="text-center text-dark-50 mb-4">Connectez-vous pour voter</h2>
+
+        <!-- Message d'erreur -->
+        <div *ngIf="errorMessage" class="alert alert-danger text-center" role="alert">
+          <i class="fas fa-exclamation-triangle me-2"></i>{{ errorMessage }}
+        </div>
+
+        <!-- Formulaire simple (avec numéro de vote) -->
+        <form *ngIf="!isDetailedForm" (ngSubmit)="authenticate()" #simpleForm="ngForm">
+
+          <div class="mb-3 form-group">
+            <label for="nameSimple" class="form-label">NOM DE FAMILLE</label>
+            <input
+              id="nameSimple"
+              class="form-control"
+              [(ngModel)]="voterName"
+              name="voterNameSimple"
+              placeholder="Votre nom"
+              required
+              [disabled]="isLoading"
+            />
+          </div>
+
+          <div class="mb-3 form-group">
+            <label for="voteNumber" class="form-label">NUMÉRO DE VOTE</label>
+            <input
+              id="voteNumber"
+              class="form-control"
+              [(ngModel)]="voteNumber"
+              name="voteNumber"
+              placeholder="Votre numéro unique de vote"
+              required
+              [disabled]="isLoading"
+            />
+          </div>
+
+          <a
+            href="javascript:void(0)"
+            (click)="toggleForm(true)"
+            class="link-switch d-block text-end mb-4"
+            *ngIf="!isLoading"
+          >
+            J'ai oublié mon numéro de vote (Renseigner mes infos personnelles)
+          </a>
+
+          <button
+            class="btn btn-dark w-100 btn-lg"
+            type="submit"
+            [disabled]="isLoading || !simpleForm.valid"
+          >
+            <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            {{ isLoading ? 'Connexion...' : 'CONNEXION' }}
+          </button>
+        </form>
+
+        <!-- Formulaire détaillé (sans numéro de vote) -->
+        <form *ngIf="isDetailedForm" (ngSubmit)="authenticate()" #detailedForm="ngForm">
+
+          <div class="mb-3 form-group">
+            <label class="form-label">NOM DE FAMILLE</label>
+            <input
+              class="form-control"
+              [(ngModel)]="voterName"
+              name="voterNameDetailed"
+              placeholder="Votre nom"
+              required
+              [disabled]="isLoading"
+            />
+          </div>
+
+          <div class="mb-3 form-group">
+            <label class="form-label">PRÉNOM</label>
+            <input
+              class="form-control"
+              [(ngModel)]="voterFirstName"
+              name="voterFirstName"
+              placeholder="Votre prénom"
+              required
+              [disabled]="isLoading"
+            />
+          </div>
+
+          <div class="mb-3 form-group">
+            <label class="form-label">DATE DE NAISSANCE</label>
+            <input
+              type="date"
+              class="form-control"
+              [(ngModel)]="voterBirthDate"
+              name="voterBirthDate"
+              required
+              [disabled]="isLoading"
+            />
+          </div>
+
+          <div class="mb-3 form-group">
+            <label class="form-label">NOM PÈRE</label>
+            <input
+              class="form-control"
+              [(ngModel)]="voterFatherName"
+              name="voterFatherName"
+              placeholder="Nom de votre père"
+              [disabled]="isLoading"
+            />
+          </div>
+
+          <div class="mb-3 form-group">
+            <label class="form-label">NOM MÈRE</label>
+            <input
+              class="form-control"
+              [(ngModel)]="voterMotherName"
+              name="voterMotherName"
+              placeholder="Nom de votre mère"
+              [disabled]="isLoading"
+            />
+          </div>
+
+          <a
+            href="javascript:void(0)"
+            (click)="toggleForm(false)"
+            class="link-switch d-block text-end mb-4"
+            *ngIf="!isLoading"
+          >
+            J'ai mon numéro de vote
+          </a>
+
+          <button
+            class="btn btn-primary w-100 btn-lg"
+            type="submit"
+            [disabled]="isLoading || !detailedForm.valid"
+          >
+            <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            {{ isLoading ? 'Connexion...' : 'CONNEXION' }}
+          </button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>

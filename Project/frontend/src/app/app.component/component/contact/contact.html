@@ -1,0 +1,76 @@
+<div class="contact-page py-5">
+  <div class="container">
+
+    <div class="row justify-content-center text-center mb-5">
+      <div class="col-lg-8">
+        <h1 class="display-5 fw-bold text-primary-dark">Contactez Notre Équipe</h1>
+        <div class="underline"></div>
+        <p class="lead  mt-3" style="color: #d3cfcf">
+          Nous sommes là pour répondre à vos questions sur la sécurité, l'auditabilité et la mise en œuvre de VoteCount.
+        </p>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+
+      <div class="col-lg-7 mb-4">
+        <div class="contact-form-card p-4 shadow-lg rounded-3">
+          <h2 class="h4 mb-4 " style="color: #0b0f2c">Envoyez-nous un Message</h2>
+
+          <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+
+            <div class="mb-3">
+              <label for="name" class="form-label">Nom Complet</label>
+              <input type="text" id="name" formControlName="name" class="form-control"
+                     [ngClass]="{'is-invalid': isSubmitted && f['name'].errors}">
+              <div *ngIf="isSubmitted && f['name'].errors" class="invalid-feedback">
+                <div *ngIf="f['name'].errors['required']">Le nom est obligatoire.</div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" id="email" formControlName="email" class="form-control"
+                     [ngClass]="{'is-invalid': isSubmitted && f['email'].errors}">
+              <div *ngIf="isSubmitted && f['email'].errors" class="invalid-feedback">
+                <div *ngIf="f['email'].errors['required']">L'email est obligatoire.</div>
+                <div *ngIf="f['email'].errors['email']">Veuillez entrer une adresse email valide.</div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="subject" class="form-label">Sujet</label>
+              <input type="text" id="subject" formControlName="subject" class="form-control"
+                     [ngClass]="{'is-invalid': isSubmitted && f['subject'].errors}">
+              <div *ngIf="isSubmitted && f['subject'].errors" class="invalid-feedback">
+                <div *ngIf="f['subject'].errors['required']">Le sujet est obligatoire.</div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="message" class="form-label">Votre Message</label>
+              <textarea id="message" formControlName="message" rows="5" class="form-control"
+                        [ngClass]="{'is-invalid': isSubmitted && f['message'].errors}"></textarea>
+              <div *ngIf="isSubmitted && f['message'].errors" class="invalid-feedback">
+                <div *ngIf="f['message'].errors['required']">Le message est obligatoire.</div>
+                <div *ngIf="f['message'].errors['minlength']">Le message doit contenir au moins 10 caractères.</div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg w-100 mt-3"
+                    [disabled]="contactForm.invalid && isSubmitted">
+              Envoyer le Message
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="col-lg-5">
+        <img src="assets/images/contact_us.png"
+             alt="Boîte de vote avec un bulletin validé"
+             class="img-fluid vote-image rounded-3" >
+      </div>
+
+    </div>
+  </div>
+</div>

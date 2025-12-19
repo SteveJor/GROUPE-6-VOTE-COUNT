@@ -1,0 +1,49 @@
+<div class="candidate-section px-5">
+  <div class="container-fluid py-5">
+    <h2 class="text-center ranking-title">CLASSEMENT DES CANDIDATS AUX ÉLECTIONS</h2>
+    <div class="underline"></div>
+
+    <!-- Spinner de chargement -->
+    <div class="text-center my-5" *ngIf="isLoading">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden text-dark">Chargement...</span>
+      </div>
+    </div>
+
+    <!-- Grille des candidats avec animation -->
+    <div class="row g-4 candidate-grid justify-content-center"
+         *ngIf="!isLoading"
+         [@listAnimation]="displayedCandidates.length">
+      <div class="col-12 col-sm-6 col-lg-4"
+           *ngFor="let candidate of displayedCandidates; trackBy: trackByPartiId">
+        <div class="candidate-card shadow-sm" [ngClass]="'card-' + candidate.color">
+
+          <div class="candidate-rank">{{ candidate.rank }}</div>
+
+          <div class="card-content">
+            <div class="candidate-profile-placeholder"></div>
+
+            <div class="candidate-info">
+              <h3 class="candidate-name">{{ candidate.nomParti }}</h3>
+              <p class="candidate-party">{{ candidate.president }}</p>
+
+              <div class="progress-container">
+                <span class="progress-percent">{{ candidate.votesPercent }}%</span>
+                <div class="progress-bar-custom">
+                  <div class="progress-fill" [style.width.%]="candidate.votesPercent"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bouton "Voir plus" -->
+    <div class="text-center mt-5" *ngIf="!isLoading && hasMoreCandidates">
+      <button class="btn btn-primary btn-lg" (click)="showMore()">
+        Voir Plus de Candidats <i class="fas fa-chevron-down ms-2"></i>
+      </button>
+    </div>
+  </div>
+</div>

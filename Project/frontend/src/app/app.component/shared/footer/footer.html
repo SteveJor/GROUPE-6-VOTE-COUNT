@@ -1,0 +1,29 @@
+<footer class="footer mt-auto py-4">
+  <div class="container">
+    <div class="row align-items-center">
+      
+      <div class="col-md-3 col-lg-4 text-center text-md-start mb-3 mb-md-0">
+        <a [routerLink]="['/']" class="footer-logo d-inline-flex align-items-center">
+          <img src="assets/images/logo2.png" alt="Logo VoteCount" height="30">
+        </a>
+      </div>
+
+      <div class="col-md-6 col-lg-4 d-flex justify-content-center">
+        <nav class="footer-nav">
+          <ul class="list-unstyled d-flex mb-0">
+            <li *ngFor="let link of navigationLinks" class="mx-3">
+              <a [routerLink]="[link.path]" class="nav-link">{{ link.label }}</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="col-md-3 col-lg-4 text-center text-md-end mt-3 mt-md-0">
+        <p class="copyright-text mb-0">
+          &copy; {{ currentYear }} {{ companyName }}. Tous droits réservés.
+        </p>
+        </div>
+
+    </div>
+  </div>
+</footer>

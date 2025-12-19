@@ -1,0 +1,76 @@
+$primary-dark: #0c102d;
+$text-color: #6c757d; // Couleur de texte gris-foncé comme sur l'image
+$hover-color: $primary-dark;
+$background-color: #f8f9fa;
+
+.footer {
+  width: 100%;
+  background-color: $background-color;
+  border-top: 1px solid #e9ecef; // Légère séparation du contenu principal
+}
+
+/* --- Navigation et Liens --- */
+.footer-nav {
+  .nav-link {
+    color: $text-color;
+    font-weight: 500;
+    font-size: 1rem;
+    padding: 0;
+    position: relative;
+    text-decoration: none;
+
+    // L'effet de soulignement (comme dans image_f7e9d4.png)
+    &::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      transform: scaleX(0); // Cacher par défaut
+      height: 2px;
+      bottom: -3px;
+      left: 0;
+      background-color: $hover-color;
+      transform-origin: bottom right;
+      transition: transform 0.3s ease-out;
+    }
+
+    &:hover, &.active {
+      color: $hover-color;
+
+      &::after {
+        transform: scaleX(1); // Afficher au survol
+        transform-origin: bottom left;
+      }
+    }
+
+    // Assurer que le lien actif a l'effet
+    &.active {
+       &::after {
+        transform: scaleX(1);
+      }
+    }
+  }
+}
+
+/* --- Copyright et Logo --- */
+.copyright-text {
+  color: $text-color;
+  font-size: 0.85rem;
+}
+
+.footer-logo img {
+  filter: grayscale(100%) brightness(50%); // Assombrir le logo pour le fond clair si nécessaire
+  // Vous pouvez ajuster le filtre pour qu'il corresponde au gris de votre image
+}
+
+/* --- Responsivité pour les petits écrans --- */
+@media (max-width: 767px) {
+  .footer-nav ul {
+    flex-direction: column;
+    align-items: center;
+    padding-top: 10px;
+
+    li {
+      margin: 5px 0 !important;
+    }
+  }
+}
